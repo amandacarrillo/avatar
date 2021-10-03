@@ -1,30 +1,37 @@
 let mic;
 let micLevel;
+let sketchStarted = false;
 
 function setup() {
   createCanvas(400, 400);
   background(222, 165, 164);
-
-  mic = new p5.AudioIn();
-  mic.start();
-
   noStroke();
   angleMode(DEGREES);
 
-  
+  createButton("Start").mousePressed(startSketch);
 }
-function draw() {
-  var xColor = map(mouseX, 0, 400, 0, 255);
-  var yColor = map(mouseY, 0, 400, 0, 255);
-  drawEars();
-  drawHead();
-  drawEyes();
-  drawBody();
-  fill(200, xColor, yColor);
-  ellipse(mouseX, mouseY, 25, 25);
 
-  fill(0);
-  ellipse(width * 0.5, height * 0.575, 20, mic.getLevel() * 400);
+function startSketch(){
+  mic = new p5.AudioIn();
+  mic.start();
+
+  sketchStarted = true;
+}
+
+function draw() {
+  if(sketchStarted){
+    var xColor = map(mouseX, 0, 400, 0, 255);
+    var yColor = map(mouseY, 0, 400, 0, 255);
+    drawEars();
+    drawHead();
+    drawEyes();
+    drawBody();
+    fill(200, xColor, yColor);
+    ellipse(mouseX, mouseY, 25, 25);
+
+    fill(0);
+    ellipse(width * 0.5, height * 0.575, 20, mic.getLevel() * 400);
+  }
 }
 
 function drawEars() {
